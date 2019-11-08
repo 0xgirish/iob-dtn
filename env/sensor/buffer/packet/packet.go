@@ -25,8 +25,19 @@ func NewPacket(parent_id, number_of_copies int) Packet {
 	}
 }
 
-// DecreseCopies after getting ACK from the reciever with n_prime
-func (p *Packet) DecreseCopies(n_prime int) error {
+// Zero zeros the packet
+// making packet zero means that packet no longer exists
+func (p *Packet) Zero() {
+	p.copies = 0
+}
+
+// Exists if the packet is zeroed or not
+func (p Packet) Exists() bool {
+	return p.copies != 0
+}
+
+// DecreaseCopies after getting ACK from the reciever with n_prime
+func (p *Packet) DecreaseCopies(n_prime int) error {
 	if p.copies > n_prime {
 		p.copies -= n_prime
 		return nil
