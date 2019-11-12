@@ -59,6 +59,10 @@ func (p *Packet) SetCopies(n int) error {
 	return fmt.Errorf("[%w] number of copies should be positive", PACKET_COPIES_ERROR)
 }
 
+func (p Packet) GetCopies() int {
+	return p.copies
+}
+
 // GetTimestamp of creation of the packet
 func (p Packet) GetTimestamp() time.Time {
 	return p.timestamp

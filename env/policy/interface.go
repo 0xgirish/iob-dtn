@@ -16,7 +16,7 @@ const CAN_NOT_CREATE_SLOT_ERROR = policyError(errors.New("CAN_NOT_CREATE_SLOT_ER
 
 type Policy interface {
 	// GetFreeSlot in the buffer, if there is no free slot then returns policyError
-	GetFreeSlot(b buffer.Buffer) (int, policyError)
+	getFreeSlot(b buffer.Buffer) (int, policyError)
 	// CreateSlot removes a slot for the packet if possible else returns policyError
 	CreateSlot(b buffer.Buffer, p packet.Packet) (int, policyError)
 }
@@ -25,7 +25,7 @@ type basePolicy struct {
 	Name string
 }
 
-func (b basePolicy) GetFreeSlot(b buffer.Buffer) (int, policyError) {
+func (b basePolicy) getFreeSlot(b buffer.Buffer) (int, policyError) {
 	for i, p := range b.packets {
 		if !p.Exists() {
 			return i, nil
