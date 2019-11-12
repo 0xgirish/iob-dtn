@@ -16,8 +16,8 @@ type Packet struct {
 	parent_id int
 }
 
-// NewPacket generation through the sensor
-func NewPacket(parent_id, number_of_copies int) Packet {
+// New packet generation through the sensor
+func New(parent_id, number_of_copies int) Packet {
 	return Packet{
 		copies:    number_of_copies,
 		parent_id: parent_id,
@@ -31,7 +31,7 @@ func (p *Packet) Zero() {
 	p.copies = 0
 }
 
-// Exists if the packet is zeroed or not
+// Exists if the packet is not zeroed
 func (p Packet) Exists() bool {
 	return p.copies != 0
 }
