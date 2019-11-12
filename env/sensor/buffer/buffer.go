@@ -12,14 +12,14 @@ const BUFFER_INVALID_INDEX_ERROR = errors.New("BUFFER_INVALID_INDEX_ERROR")
 
 // Buffer is simulated buffer for the sensor
 type Buffer struct {
-	packets []packet.Packet
+	Packets []packet.Packet
 	size    uint
 }
 
 func New(size uint) Buffer {
 	return Buffeer{
 		size:    size,
-		packets: make([]packet.Packet, size),
+		Packets: make([]packet.Packet, size),
 	}
 }
 
@@ -27,11 +27,11 @@ func New(size uint) Buffer {
 // if there is an another non-zero packet then it replaces it with current packet
 func (b *Buffer) Add(p packet.Packet, index int) error {
 	if index < int(b.size) && index >= 0 {
-		if !b.packets[index].Exists() {
-			b.packets[index] = p
+		if !b.Packets[index].Exists() {
+			b.Packets[index] = p
 			return nil
 		}
-		b.packets[index] = p
+		b.Packets[index] = p
 		return BUFFER_PACKET_REMOVED_ERROR
 	}
 	return BUFFER_INVALID_INDEX_ERROR
@@ -40,7 +40,7 @@ func (b *Buffer) Add(p packet.Packet, index int) error {
 // Remove zeros the packet at the index
 func (b *Buffer) Remove(index int) error {
 	if index < int(b.size) && index >= 0 {
-		b.packets[index].Zero()
+		b.Packets[index].Zero()
 		return nil
 	}
 	return BUFFER_INVALID_INDEX_ERROR

@@ -14,22 +14,22 @@ type LC struct {
 	basePolicy
 }
 
-func (l LC) CreateSlot(b buffer.Buffer, p packet.Packet) (int, policyError) {
+func (l LC) CreateSlot(b buffer.Buffer, p packet.Packet, sensor_id int) (int, policyError) {
 	index, err := l.getFreeSlot(b)
 	if err == nil {
 		return index, nil
 	}
 
 	min_copies := math.MaxInt32
-	for i, p := range b.packets {
-		if min_copies > p.GetCopies() {
-			min_copies = p.GetCopies()
+	for i, pac := range b.Packets {
+		if min_copies > pac.GetCopies() {
+			min_copies = pac.GetCopies()
 			index = i
-		} else if min_copies == p.GetCopies() {
+		} else if min_copies == pac.GetCopies() {
 			if rand.Int()%2 == 0 {
 				index = i
 			}
 		}
 	}
-	return index, nil
+	return index, err
 }

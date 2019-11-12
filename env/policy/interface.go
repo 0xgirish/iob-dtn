@@ -18,7 +18,7 @@ type Policy interface {
 	// GetFreeSlot in the buffer, if there is no free slot then returns policyError
 	getFreeSlot(b buffer.Buffer) (int, policyError)
 	// CreateSlot removes a slot for the packet if possible else returns policyError
-	CreateSlot(b buffer.Buffer, p packet.Packet) (int, policyError)
+	CreateSlot(b buffer.Buffer, p packet.Packet, sensor_id int) (int, policyError)
 }
 
 type basePolicy struct {
@@ -26,7 +26,7 @@ type basePolicy struct {
 }
 
 func (b basePolicy) getFreeSlot(b buffer.Buffer) (int, policyError) {
-	for i, p := range b.packets {
+	for i, p := range b.Packets {
 		if !p.Exists() {
 			return i, nil
 		}
