@@ -14,7 +14,7 @@ type NP struct {
 }
 
 func (n NP) CreateSlot(b buffer.Buffer, p packet.Packet, sensor_id int) (int, policyError) {
-	index, err := l.getFreeSlot(b)
+	index, err := n.getFreeSlot(b)
 	if err == nil {
 		return index, nil
 	}

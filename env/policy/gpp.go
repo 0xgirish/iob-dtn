@@ -16,7 +16,7 @@ type GPP struct {
 }
 
 func (g GPP) CreateSlot(b buffer.Buffer, p packet.Packet, sensor_id int) (int, policyError) {
-	index, err := l.getFreeSlot(b)
+	index, err := g.getFreeSlot(b)
 	if err == nil {
 		return index, nil
 	}
