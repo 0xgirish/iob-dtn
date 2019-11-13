@@ -3,6 +3,7 @@ package buffer
 
 import (
 	"errors"
+	"flag"
 
 	"github.com/iob-dtn/env/sensor/buffer/packet"
 )
@@ -10,15 +11,21 @@ import (
 const BUFFER_PACKET_REMOVED_ERROR = errors.New("BUFFER_PACKET_REMOVED_ERROR")
 const BUFFER_INVALID_INDEX_ERROR = errors.New("BUFFER_INVALID_INDEX_ERROR")
 
+var buffer_size uint
+
+func init() {
+	flag.UintVar(&buffer_size, "buffer-size", 20, "sensor buffer size")
+}
+
 // Buffer is simulated buffer for the sensor
 type Buffer struct {
 	Packets []packet.Packet
 	size    uint
 }
 
-func New(size uint) Buffer {
+func New() Buffer {
 	return Buffeer{
-		size:    size,
+		size:    buffer_size,
 		Packets: make([]packet.Packet, size),
 	}
 }
