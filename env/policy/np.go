@@ -1,8 +1,6 @@
 package Policy
 
 import (
-	"time"
-
 	"github.com/iob-dtn/env/sensor/buffer"
 	"github.com/iob-dtn/env/sensor/buffer/packet"
 )
@@ -19,15 +17,8 @@ func (n NP) CreateSlot(b buffer.Buffer, p packet.Packet, sensor_id int) (int, po
 		return index, nil
 	}
 
-	var min_time time.Time
-	var first_time = true
-
+	min_time := b.Packets[0].GetTimestamp()
 	for i, pac := range b.Packets {
-		if first_time {
-			min_time, index = pac.GetTimestamp(), i
-			first_time = false
-			continue
-		}
 		if min_time.After(pac.GetTimestamp()) {
 			min_time, index = pac.GetTimestamp(), i
 		}
