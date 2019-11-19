@@ -1,8 +1,8 @@
-package Policy
+package policy
 
 import (
-	"github.com/iob-dtn/env/sensor/buffer"
-	"github.com/iob-dtn/env/sensor/buffer/packet"
+	"github.com/zkmrgirish/iob-dtn/env/sensor/buffer"
+	"github.com/zkmrgirish/iob-dtn/env/sensor/buffer/packet"
 )
 
 // GPP Generated Packet Priority
@@ -24,7 +24,8 @@ func (g GPP) CreateSlot(b buffer.Buffer, p packet.Packet, sensor_id int) (int, p
 		return 0, CAN_NOT_CREATE_SLOT_ERROR
 	}
 
-	min_time := b.Packets[0].GetTimestamp()
+	index = 0
+	min_time := b.Packets[index].GetTimestamp()
 	for i, pac := range b.Packets {
 		if min_time.After(pac.GetTimestamp()) {
 			min_time, index = pac.GetTimestamp(), i

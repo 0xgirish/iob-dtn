@@ -5,10 +5,13 @@ import (
 	"errors"
 	"flag"
 
-	"github.com/iob-dtn/env/sensor/buffer/packet"
+	"github.com/zkmrgirish/iob-dtn/env/sensor/buffer/packet"
 )
 
+// BUFFER_PACKET_REMOVED_ERROR when some packet is removed from the buffer
 const BUFFER_PACKET_REMOVED_ERROR = errors.New("BUFFER_PACKET_REMOVED_ERROR")
+
+// BUFFER_INVALID_INDEX_ERROR when when the index is out of range
 const BUFFER_INVALID_INDEX_ERROR = errors.New("BUFFER_INVALID_INDEX_ERROR")
 
 var buffer_size uint
@@ -24,9 +27,9 @@ type Buffer struct {
 }
 
 func New() Buffer {
-	return Buffeer{
+	return Buffer{
 		size:    buffer_size,
-		Packets: make([]packet.Packet, size),
+		Packets: make([]packet.Packet, buffer_size),
 	}
 }
 

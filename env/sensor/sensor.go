@@ -2,8 +2,9 @@
 package sensor
 
 import (
-	"github.com/iob-dtn/env/sensor/buffer"
-	"github.com/iob-dtn/env/sensor/buffer/packet"
+	"github.com/zkmrgirish/iob-dtn/env/policy"
+	"github.com/zkmrgirish/iob-dtn/env/sensor/buffer"
+	"github.com/zkmrgirish/iob-dtn/env/sensor/buffer/packet"
 )
 
 type Sensor struct {

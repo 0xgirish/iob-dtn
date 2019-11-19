@@ -1,11 +1,11 @@
-package Policy
+package policy
 
 import (
-	"crypto/rand"
 	"math"
+	"math/rand"
 
-	"github.com/iob-dtn/env/sensor/buffer"
-	"github.com/iob-dtn/env/sensor/buffer/packet"
+	"github.com/zkmrgirish/iob-dtn/env/sensor/buffer"
+	"github.com/zkmrgirish/iob-dtn/env/sensor/buffer/packet"
 )
 
 // LC Lesser Copy

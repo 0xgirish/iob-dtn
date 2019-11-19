@@ -1,8 +1,8 @@
-package Policy
+package policy
 
 import (
-	"github.com/iob-dtn/env/sensor/buffer"
-	"github.com/iob-dtn/env/sensor/buffer/packet"
+	"github.com/zkmrgirish/iob-dtn/env/sensor/buffer"
+	"github.com/zkmrgirish/iob-dtn/env/sensor/buffer/packet"
 )
 
 // KNOP Keep Oldest No Priority

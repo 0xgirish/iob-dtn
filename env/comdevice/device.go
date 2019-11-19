@@ -10,7 +10,7 @@ func (d device) Receive(msg Message) {
 	d.reveiver <- msg
 }
 
-// Send send's the message to device's receiver
+// Send sends the message to device's receiver
 func (d device) Send(msg Message, dvc Comdevice) {
 	dvc.Receive(msg)
 }

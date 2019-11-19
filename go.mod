@@ -1,3 +1,3 @@
-module github.com/iob-dtn
+module github.com/zkmrgirish/iob-dtn
 
 go 1.13
