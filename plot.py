@@ -8,7 +8,7 @@ def plot(df, color, name):
 
     part = 20
 
-    ls = np.linspace(0.0, 0.9, part)
+    ls = np.linspace(0.0, 0.85, part)
     cdf = np.array([0.0] * part)
     total = len(loss_rate)
 
