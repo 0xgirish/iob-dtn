@@ -4,11 +4,11 @@ package util
 import "math"
 
 type Position struct {
-	x, y int
+	X, Y int
 }
 
 func (p Position) Distance(d Position) float64 {
-	dx := float64(p.x - d.x)
-	dy := float64(p.y - d.y)
+	dx := float64(p.X - d.X)
+	dy := float64(p.Y - d.Y)
 	return math.Sqrt(dx*dx + dy*dy)
 }

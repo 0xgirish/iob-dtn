@@ -2,12 +2,9 @@
 package station
 
 import (
-	"log"
 	"sync"
 
 	"github.com/zkmrgirish/iob-dtn/env/comdevice"
-	"github.com/zkmrgirish/iob-dtn/env/manager"
-	"github.com/zkmrgirish/iob-dtn/env/sensor/buffer/packet"
 	"github.com/zkmrgirish/iob-dtn/env/util"
 )
 
@@ -16,42 +13,27 @@ var (
 	mux sync.Mutex
 )
 
-type station struct {
+type Station struct {
 	Id       int
 	pos      util.Position
 	receiver chan comdevice.Message
 	comdevice.Comdevice
 }
 
-func New(pos util.Position) station {
+func New(pos util.Position) Station {
 	mux.Lock()
 	defer mux.Unlock()
 
 	id--
 	receiver := make(chan comdevice.Message)
-	return station{
+	return Station{
 		Id:        id,
 		pos:       pos,
 		receiver:  receiver,
-		Comdevice: comdevice.New(receiver),
+		Comdevice: comdevice.NewStationDevice(id, &pos),
 	}
 }
 
-func (s station) Listen() {
-	for {
-		select {
-		case msg := <-s.receiver:
-			if msg.To != s.Id && msg.Type != comdevice.PacketTransfer {
-				continue
-			}
-
-			pkt, ok := msg.Msg.(packet.Packet)
-			if !ok {
-				log.Printf("message type shoud be packet.Packet with message singal: %s\n", msg.Type)
-				continue
-			}
-			manager.MarkSuccess(pkt.Parent_id, pkt.Id)
-			// TODO: send ACK to msg.From
-		}
-	}
+func (s Station) GetPosition() util.Position {
+	return s.pos
 }

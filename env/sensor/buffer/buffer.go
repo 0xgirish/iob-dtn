@@ -9,10 +9,10 @@ import (
 )
 
 // BUFFER_PACKET_REMOVED_ERROR when some packet is removed from the buffer
-const BUFFER_PACKET_REMOVED_ERROR = errors.New("BUFFER_PACKET_REMOVED_ERROR")
+var BUFFER_PACKET_REMOVED_ERROR = errors.New("BUFFER_PACKET_REMOVED_ERROR")
 
 // BUFFER_INVALID_INDEX_ERROR when when the index is out of range
-const BUFFER_INVALID_INDEX_ERROR = errors.New("BUFFER_INVALID_INDEX_ERROR")
+var BUFFER_INVALID_INDEX_ERROR = errors.New("BUFFER_INVALID_INDEX_ERROR")
 
 var buffer_size uint
 
@@ -31,6 +31,15 @@ func New() Buffer {
 		size:    buffer_size,
 		Packets: make([]packet.Packet, buffer_size),
 	}
+}
+
+func (b *Buffer) InBuffer(pkt packet.Packet) bool {
+	for _, p := range b.Packets {
+		if pkt.Id == p.Id {
+			return true
+		}
+	}
+	return false
 }
 
 // Add adds the packet at index in the buffer
