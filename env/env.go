@@ -14,12 +14,12 @@ import (
 
 var (
 	DeviceRange            float64
-	num_cycles_per_station uint
+	Num_cycles_per_station uint
 )
 
 func init() {
 	flag.Float64Var(&DeviceRange, "range", 3.0, "bike sensor range")
-	flag.UintVar(&num_cycles_per_station, "num-cycles", 8, "number of cycles per station")
+	flag.UintVar(&Num_cycles_per_station, "num-cycles", 8, "number of cycles per station")
 	flag.Parse()
 }
 
@@ -61,7 +61,7 @@ func (e *env) StartSimulation() {
 
 func New(spos []util.Position, sensors []sensor.Sensor, stop chan bool) env {
 	ssize := len(spos)
-	bicycles := make([]bicycle.Bicycle, ssize*int(num_cycles_per_station))
+	bicycles := make([]bicycle.Bicycle, ssize*int(Num_cycles_per_station))
 	stations := make([]station.Station, ssize)
 
 	envr := env{
@@ -71,8 +71,8 @@ func New(spos []util.Position, sensors []sensor.Sensor, stop chan bool) env {
 
 	for i, pos := range spos {
 		envr.stations[i] = station.New(pos)
-		for k := 0; k < int(num_cycles_per_station); k++ {
-			ind := i*int(num_cycles_per_station) + k
+		for k := 0; k < int(Num_cycles_per_station); k++ {
+			ind := i*int(Num_cycles_per_station) + k
 			envr.bicycles[ind] = bicycle.New(pos, sensors[ind], envr, stop)
 		}
 	}
