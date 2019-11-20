@@ -19,11 +19,11 @@ func init() {
 }
 
 type Sensor struct {
-	Id     int
-	b      buffer.Buffer
-	p      policy.Policy
-	failes int
-	stop   chan bool
+	Id      int
+	b       buffer.Buffer
+	p       policy.Policy
+	started bool
+	stop    chan bool
 }
 
 // New creates a sensor and registers it with manager
@@ -43,23 +43,30 @@ func (s Sensor) GeneratePacket() packet.Packet {
 
 // Start generating packets
 func (s Sensor) Start() {
+	if s.started {
+		return
+	}
+	s.started = true
 	wait_duration := time.Duration(1000/int(generation_frequency)) * time.Millisecond
 	tick := time.Tick(wait_duration)
-	for {
-		select {
-		case <-tick:
-			pkt := s.GeneratePacket()
-			manager.IncrCounter(s.Id)
-			ind, err := s.p.CreateSlot(s.b, pkt, s.Id)
-			if err != nil && errors.As(err, policy.CAN_NOT_CREATE_SLOT_ERROR) {
-				continue
-			}
-			s.b.Add(pkt, ind)
+	go func() {
+		for {
+			select {
+			case <-tick:
+				pkt := s.GeneratePacket()
+				ind, err := s.p.CreateSlot(s.b, pkt, s.Id)
+				if err != nil && errors.As(err, policy.CAN_NOT_CREATE_SLOT_ERROR) {
+					continue
+				}
+				s.b.Add(pkt, ind)
 
-		case <-s.stop:
-			return
+			case <-s.stop:
+				s.started = false
+				return
+			}
 		}
-	}
+
+	}()
 }
 
 // Stop sensor from generating packets

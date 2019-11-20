@@ -16,8 +16,8 @@ func (d device) Send(msg Message, dvc Comdevice) {
 }
 
 // New Comdevice for a sensor
-func New() Comdevice {
+func New(receiver chan Message) Comdevice {
 	return device{
-		receiver: make(chan Message),
+		receiver: receiver,
 	}
 }

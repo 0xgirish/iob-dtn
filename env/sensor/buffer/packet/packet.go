@@ -7,6 +7,8 @@ import (
 	"fmt"
 	"sync"
 	"time"
+
+	"github.com/zkmrgirish/iob-dtn/env/manager"
 )
 
 var PACKET_COPIES_ERROR = errors.New("PACKET_COPIES_ERROR")
@@ -31,16 +33,18 @@ type Packet struct {
 
 // New packet generation through the sensor
 func New(parent_id int) Packet {
+	defer manager.IncrCounter(parent_id)
+
 	mux.Lock()
 	defer mux.Unlock()
 
+	packet_id++
 	pkt := Packet{
 		copies:    int(number_of_copies),
 		parent_id: parent_id,
 		timestamp: time.Now(),
 		Id:        packet_id,
 	}
-	packet_id++
 
 	return pkt
 }

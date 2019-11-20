@@ -6,14 +6,14 @@ import (
 	"sync"
 )
 
+// Manager keep the count of successfully delivered packets and total number of generated packets for a parent
+// and set of delivered packets. manager implements stringer interface
 var Manager = manager{
 	successCount: make(map[int]int),
 	packetCount:  make(map[int]int),
 	delivered:    make(map[int]bool),
 }
 
-// manager keep the count of successfully delivered packets and total number of generated packets for a parent
-// and set of delivered packets. manager implements stringer interface
 type manager struct {
 	successCount map[int]int
 	packetCount  map[int]int
