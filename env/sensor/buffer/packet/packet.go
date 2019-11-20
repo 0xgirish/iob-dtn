@@ -5,12 +5,17 @@ import (
 	"errors"
 	"flag"
 	"fmt"
+	"sync"
 	"time"
 )
 
-const PACKET_COPIES_ERROR = errors.New("PACKET_COPIES_ERROR")
+var PACKET_COPIES_ERROR = errors.New("PACKET_COPIES_ERROR")
 
-var number_of_copies uint
+var (
+	number_of_copies uint
+	packet_id        int
+	mux              sync.Mutex
+)
 
 func init() {
 	flag.UintVar(&number_of_copies, "num-copies", 8, "maximum number of copies of a packate in a buffer")
@@ -21,15 +26,23 @@ type Packet struct {
 	copies    int
 	timestamp time.Time
 	parent_id int
+	Id        int
 }
 
 // New packet generation through the sensor
 func New(parent_id int) Packet {
-	return Packet{
+	mux.Lock()
+	defer mux.Unlock()
+
+	pkt := Packet{
 		copies:    int(number_of_copies),
 		parent_id: parent_id,
 		timestamp: time.Now(),
+		Id:        packet_id,
 	}
+	packet_id++
+
+	return pkt
 }
 
 // Zero zeros the packet

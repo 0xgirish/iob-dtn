@@ -7,7 +7,7 @@ type device struct {
 
 // Receive sends the message to device's receiver channel
 func (d device) Receive(msg Message) {
-	d.reveiver <- msg
+	d.receiver <- msg
 }
 
 // Send sends the message to device's receiver
@@ -17,7 +17,7 @@ func (d device) Send(msg Message, dvc Comdevice) {
 
 // New Comdevice for a sensor
 func New() Comdevice {
-	return device {
-		receiver: make(chan Message)
+	return device{
+		receiver: make(chan Message),
 	}
 }
