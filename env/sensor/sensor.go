@@ -39,7 +39,7 @@ func New(id int, p policy.Policy) Sensor {
 func (s *Sensor) GeneratePacket() {
 	pkt := packet.New(s.Id)
 	ind, err := s.P.CreateSlot(s.B, pkt, s.Id)
-	if err != nil && errors.As(err, policy.CAN_NOT_CREATE_SLOT_ERROR) {
+	if err != nil && errors.Is(err, policy.CAN_NOT_CREATE_SLOT_ERROR) {
 		return
 	}
 	s.B.Add(pkt, ind)

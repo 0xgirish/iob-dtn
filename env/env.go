@@ -4,6 +4,7 @@ package env
 import (
 	"flag"
 	"math/rand"
+	"time"
 
 	"github.com/zkmrgirish/iob-dtn/env/bicycle"
 	"github.com/zkmrgirish/iob-dtn/env/comdevice"
@@ -20,7 +21,6 @@ var (
 func init() {
 	flag.Float64Var(&DeviceRange, "range", 3.0, "bike sensor range")
 	flag.UintVar(&Num_cycles_per_station, "num-cycles", 8, "number of cycles per station")
-	flag.Parse()
 }
 
 type env struct {
@@ -30,6 +30,7 @@ type env struct {
 
 // RequestDestination is required by the bicycle
 func (e env) RequestDestination() util.Position {
+	rand.Seed(int64(time.Now().Nanosecond()))
 	ind := rand.Int() % len(e.stations)
 	return e.stations[ind].GetPosition()
 }

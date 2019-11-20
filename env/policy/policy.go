@@ -18,13 +18,13 @@ var POLICY_NOT_FOUND_ERROR = errors.New("POLICY_NOT_FOUND_ERROR")
 func New(name policyType) Policy {
 	switch name {
 	case KONP_POLICY:
-		return KONP{Name: string(name)}
+		return KONP{basePolicy{Name: string(name)}}
 	case NP_POLICY:
-		return NP{Name: string(name)}
+		return NP{basePolicy{Name: string(name)}}
 	case GPP_POLICY:
-		return GPP{Name: string(name)}
+		return GPP{basePolicy{Name: string(name)}}
 	case LC_POLICY:
-		return LC{Name: string(name)}
+		return LC{basePolicy{Name: string(name)}}
 	default:
 		panic(fmt.Errorf("%w %s", POLICY_NOT_FOUND_ERROR, name))
 	}

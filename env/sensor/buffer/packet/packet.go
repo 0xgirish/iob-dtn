@@ -41,7 +41,7 @@ func New(parent_id int) Packet {
 	packet_id++
 	pkt := Packet{
 		copies:    int(number_of_copies),
-		parent_id: parent_id,
+		Parent_id: parent_id,
 		timestamp: time.Now(),
 		Id:        packet_id,
 	}

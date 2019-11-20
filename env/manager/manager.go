@@ -21,12 +21,27 @@ type manager struct {
 	mux          sync.Mutex
 }
 
+func Erase() {
+	for key, _ := range Manager.successCount {
+		delete(Manager.successCount, key)
+	}
+
+	for key, _ := range Manager.packetCount {
+		delete(Manager.packetCount, key)
+	}
+
+	for key, _ := range Manager.delivered {
+		delete(Manager.delivered, key)
+	}
+}
+
 // Register the parent for deliveries
 func Register(parent int) {
 	Manager.mux.Lock()
 	defer Manager.mux.Unlock()
 
 	Manager.packetCount[parent] = 0
+	Manager.successCount[parent] = 0
 }
 
 // IncrCunter increases the total packetCount for parent by one
@@ -51,7 +66,7 @@ func MarkSuccess(parent, pkt int) {
 // String returns the manager data of delivered packets of bicycles in string form
 // e.g. fmt.Fprint(os.Create("result.txt"), manager)
 func (m manager) String() string {
-	result := "id,success,packetCount"
+	result := "id,success,packetCount\n"
 	for parent, packetCount := range m.packetCount {
 		result += fmt.Sprintf("%d,%d,%d\n", parent, m.successCount[parent], packetCount)
 	}

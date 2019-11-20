@@ -13,14 +13,14 @@ type GPP struct {
 	basePolicy
 }
 
-func (g GPP) CreateSlot(b buffer.Buffer, p packet.Packet, sensor_id int) (int, policyError) {
+func (g GPP) CreateSlot(b buffer.Buffer, p packet.Packet, sensor_id int) (int, error) {
 	index, err := g.getFreeSlot(b)
 	if err == nil {
 		return index, nil
 	}
 
 	// if the packet is received not generated then, do not allocate slot
-	if sensor_id != p.GetParentId() {
+	if sensor_id != p.Parent_id {
 		return 0, CAN_NOT_CREATE_SLOT_ERROR
 	}
 

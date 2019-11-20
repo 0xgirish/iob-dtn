@@ -51,35 +51,38 @@ func (b Bicycle) GetPosition() util.Position {
 }
 
 // SetDestination of the bicycle if the bicycle has reached the station
-func (b Bicycle) SetDestination(dest util.Position) {
+func (b *Bicycle) SetDestination(dest util.Position) {
 	if b.Reached() {
 		b.dest = dest
 	}
 }
 
-func (b Bicycle) Initiate() {
+func (b *Bicycle) Initiate() {
 	move := time.Tick(time.Duration(1000/int(speed)) * time.Millisecond)
-	duty := time.Tick(time.Duration(1000/int(sensor.Generation_frequency)) * time.Millisecond)
+	duty := time.Tick(time.Duration(4000/int(sensor.Generation_frequency)) * time.Millisecond)
 
-	generate := true
+	var generate bool
 	for {
 		select {
 		case <-move:
 			b.Move()
 		case <-duty:
-			if generate {
-				go b.sensor.GeneratePacket()
-			} else {
-				go b.SendPackets()
-			}
 			generate = (!generate)
+			if !b.moving {
+				continue
+			}
+			if generate {
+				b.sensor.GeneratePacket()
+			} else {
+				b.SendPackets()
+			}
 		case <-b.stop:
 			return
 		}
 	}
 }
 
-func (b Bicycle) SendPackets() {
+func (b *Bicycle) SendPackets() {
 	for ind, pkt := range b.sensor.B.Packets {
 		if pkt.GetCopies() > 1 {
 			for _, dvc := range b.env.Range(b.pos) {
@@ -102,7 +105,7 @@ func (b Bicycle) SendPackets() {
 }
 
 // Move moves the bicycle randomly towards the destination
-func (b Bicycle) Move() {
+func (b *Bicycle) Move() {
 	if b.Reached() {
 		b.moving = false
 		time.Sleep(100 * time.Millisecond)
@@ -112,6 +115,8 @@ func (b Bicycle) Move() {
 	}
 
 	b.moving = true
+
+	rand.Seed(int64(time.Now().Nanosecond()))
 	vertical := rand.Int()%2 == 0
 	if vertical {
 		if b.dest.Y-b.pos.Y > 0 {

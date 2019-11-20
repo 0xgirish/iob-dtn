@@ -1,7 +1,9 @@
 // Packege util provides basic utility
 package util
 
-import "math"
+import (
+	"math"
+)
 
 type Position struct {
 	X, Y int

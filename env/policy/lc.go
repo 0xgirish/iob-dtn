@@ -3,6 +3,7 @@ package policy
 import (
 	"math"
 	"math/rand"
+	"time"
 
 	"github.com/zkmrgirish/iob-dtn/env/sensor/buffer"
 	"github.com/zkmrgirish/iob-dtn/env/sensor/buffer/packet"
@@ -14,7 +15,7 @@ type LC struct {
 	basePolicy
 }
 
-func (l LC) CreateSlot(b buffer.Buffer, p packet.Packet, sensor_id int) (int, policyError) {
+func (l LC) CreateSlot(b buffer.Buffer, p packet.Packet, sensor_id int) (int, error) {
 	index, err := l.getFreeSlot(b)
 	if err == nil {
 		return index, nil
@@ -26,6 +27,7 @@ func (l LC) CreateSlot(b buffer.Buffer, p packet.Packet, sensor_id int) (int, po
 			min_copies = pac.GetCopies()
 			index = i
 		} else if min_copies == pac.GetCopies() {
+			rand.Seed(int64(time.Now().Nanosecond()))
 			if rand.Int()%2 == 0 {
 				index = i
 			}

@@ -12,7 +12,7 @@ type KONP struct {
 	basePolicy
 }
 
-func (k KONP) CreateSlot(b buffer.Buffer, p packet.Packet, sensor_id int) (int, policyError) {
+func (k KONP) CreateSlot(b buffer.Buffer, p packet.Packet, sensor_id int) (int, error) {
 	index, err := k.getFreeSlot(b)
 	if err != nil {
 		return 0, CAN_NOT_CREATE_SLOT_ERROR

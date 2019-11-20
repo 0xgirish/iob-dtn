@@ -59,7 +59,7 @@ func (d device) Receive(msg Message) Message {
 	}
 
 	ind, err := d.s.P.CreateSlot(d.s.B, pkt, d.s.Id)
-	if err != nil && errors.As(err, policy.CAN_NOT_CREATE_SLOT_ERROR) {
+	if err != nil && errors.Is(err, policy.CAN_NOT_CREATE_SLOT_ERROR) {
 		return Message{
 			Type: ACK,
 			Msg:  0,
@@ -70,7 +70,7 @@ func (d device) Receive(msg Message) Message {
 	n := pkt.GetCopies()
 	pkt.DecreaseCopies(n / 2)
 	err = d.s.B.Add(pkt, ind)
-	if err != nil && !errors.As(err, buffer.BUFFER_PACKET_REMOVED_ERROR) {
+	if err != nil && !errors.Is(err, buffer.BUFFER_PACKET_REMOVED_ERROR) {
 		return Message{
 			Type: ACK,
 			Msg:  0,
@@ -140,7 +140,7 @@ func (sd stationDevice) Receive(msg Message) Message {
 	manager.MarkSuccess(pkt.Parent_id, pkt.Id)
 	return Message{
 		Type: ACK,
-		Msg:  pkt.GetCopies(),
+		Msg:  0,
 		From: sd.id,
 		To:   msg.From,
 	}

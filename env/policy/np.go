@@ -11,7 +11,7 @@ type NP struct {
 	basePolicy
 }
 
-func (n NP) CreateSlot(b buffer.Buffer, p packet.Packet, sensor_id int) (int, policyError) {
+func (n NP) CreateSlot(b buffer.Buffer, p packet.Packet, sensor_id int) (int, error) {
 	index, err := n.getFreeSlot(b)
 	if err == nil {
 		return index, nil
