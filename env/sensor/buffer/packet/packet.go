@@ -27,7 +27,7 @@ func init() {
 type Packet struct {
 	copies    int
 	timestamp time.Time
-	parent_id int
+	Parent_id int
 	Id        int
 }
 
@@ -90,9 +90,4 @@ func (p Packet) GetCopies() int {
 // GetTimestamp of creation of the packet
 func (p Packet) GetTimestamp() time.Time {
 	return p.timestamp
-}
-
-// GetParentId of the packet, the sensor which generated the packet
-func (p Packet) GetParentId() int {
-	return p.parent_id
 }

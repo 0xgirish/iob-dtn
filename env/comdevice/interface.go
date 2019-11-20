@@ -18,4 +18,6 @@ type Comdevice interface {
 type Message struct {
 	Type msgType
 	Msg  interface{}
+	From int
+	To   int
 }

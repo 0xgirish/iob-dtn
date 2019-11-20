@@ -18,6 +18,7 @@ func init() {
 	flag.UintVar(&generation_frequency, "freq", 4, "number of packets to be generated in a second")
 }
 
+// Sensor simulation
 type Sensor struct {
 	Id      int
 	b       buffer.Buffer
