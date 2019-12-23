@@ -42,4 +42,6 @@ Plot graph:
 ----------
     $ python plot.py
 
+Result Image:
+-------------
 ![Result Image](https://raw.githubusercontent.com/zkmrgirish/iob-dtn/master/imgs/true.png)
