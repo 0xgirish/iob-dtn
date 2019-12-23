@@ -6,7 +6,7 @@ import pandas as pd
 def plot(df, color, name):
     loss_rate = (df['packetCount'] - df['success']) / df['packetCount']
 
-    part = 20
+    part = 16
 
     ls = np.linspace(0.0, 0.85, part)
     cdf = np.array([0.0] * part)
