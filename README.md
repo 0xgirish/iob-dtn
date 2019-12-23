@@ -41,3 +41,5 @@ How to run:
 Plot graph:
 ----------
     $ python plot.py
+
+![Result Image](https://raw.githubusercontent.com/zkmrgirish/iob-dtn/master/imgs/true.png)
