@@ -1,7 +1,8 @@
 # IoB-DTN
 Adhoc wireless networks course project
 
-This is an implementation of [IoB-DTN research paper](https://hal.archives-ouvertes.fr/hal-01772664/file/p131-zguira.pdf).
+This is an implementation of [IoB-DTN research paper](https://hal.archives-ouvertes.fr/hal-01772664/file/p131-zguira.pdf).<br>
+For the simplification I have assumed (25 x 25) grid city with some sink stations. The bicycles are assigned stations with uniform distribution and the path of the bicycle is choosen randomly.
 
 Requirenments:
 ---------------
