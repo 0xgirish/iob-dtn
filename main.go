@@ -54,7 +54,7 @@ func RunSimulationWithPolicy(p policy.Policy, simulationTime int, name string) {
 
 	for i := 1; i <= len(spos)*int(env.Num_cycles_per_station); i++ {
 		manager.Register(i)
-		sensors = append(sensors, sensor.New(i, policy.New(policy.GPP_POLICY)))
+		sensors = append(sensors, sensor.New(i, p))
 	}
 
 	envr := env.New(spos, sensors, stop)
